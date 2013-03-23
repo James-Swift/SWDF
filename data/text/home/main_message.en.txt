@@ -1,0 +1,6 @@
+<p>
+Welcome to the Swift Web Development Framework.
+</p>
+<p>
+This is the example theme. To get started on creating a new one, investigate directories "settings","models" and "themes".
+</p>
