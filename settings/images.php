@@ -29,7 +29,7 @@
 ////////////////////////////////////////////////////////////////	
 /* For security reasons, the SWDF doesn't allow the resizer script to resize just any
  * image. You need to pre-declare directories where the resizer is allowed to operate.
- * You can also restrict which sizes are allowed in which directories. To do so, use 
+ * You can  restrict which sizes are allowed in which directories. To do so, use 
  * the: SWDF_add_img_path() function in this file like so:
  * 
  * SWDF_add_img_path( Array(
@@ -38,9 +38,13 @@
  *	"deny_sizes"=>Array(1,2,3)
  * ));
  *	
+ * You can also require an authorization signal be passed ot the SWDF_image_resizer_request()
+ * function before it will resize an image.
+ *	
  * "path"			string	*	The relative path to the directory from $_SWDF['paths']['root']. Examples: "images/" or "graphics/special/". Must end in "/".
  * "allow_sizes"	array		An array of sizes to allow. All other sizes will be blocked unless otherwise specified. To allow all sizes, set to string "all". Default is "all".
- * "deny_sizes"	array		An array of sizes to deny. All other sizes will be allowed unless otherwise specified. To block all sizes, set to string "all". By default, none are blocked.
+ * "deny_sizes"		array		An array of sizes to deny. All other sizes will be allowed unless otherwise specified. To block all sizes, set to string "all". By default, none are blocked.
+ * "require_auth"	boolean		When set to true, the SWDF_image_resizer_request() function must be called with the "authorized" argument set to true (called false by default). This adds an extra level of security, as if you forget to add the code to check for authorization before making the request, the request will not be processed. Note: the default ?p=_img resizing script always sets authorized=false. Hence this feature is only really useful if you are calling SWDF_image_resizer_request() manually in your own scripts. If you aren't, ignore this feature.
  * 
  * 
  * Specified settings affect the specified directory and all it's sub-directories, 
@@ -81,7 +85,7 @@
  * 
  * Note: * = required,  - = sometimes required
  * 
- * "id"				string	*	The identifier for the size, can be alphanumeric and must be the same as _ID_ above (the id of the array).
+ * "id"				string	*	The identifier for the size, must be ALPHANUMERIC and must be the same as _ID_ above (the id of the array).
  * "method"			string	*	The method of resizing. Possible values: original|fit|fill|stretch|scale
  * "width"			int		-	The output width of the image (ignored with methods "original" and "scale")
  * "height"			int		-	The output height of the image (ignored with methods "original" and "scale")
@@ -110,15 +114,15 @@
 	$_SWDF['settings']['images']['sizes']['1']=Array(
 		"id"=>1,
 		"method"=>"fit",
-		"width"=>1000,
-		"height"=>1000,
+		"width"=>300,
+		"height"=>300,
 		"watermark"=>Array(
-			"path"=>$_SWDF['paths']['root']."images/copyright.png",
+			"path"=>$_SWDF['paths']['root']."images/watermark.png",
 			"v"=>"center",
 			"h"=>"center",
-			"scale"=>3,
+			"scale"=>0.5,
 			"opacity"=>50,
-			"repeat"=>false,
+			"repeat"=>true,
 		),
 	);
 	

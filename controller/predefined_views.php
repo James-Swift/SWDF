@@ -7,8 +7,8 @@
 		"name"=>"_img",
 		"template"=>"empty",
 		"model_includes"=>Array(
-						$_SWDF['paths']['root']."settings/images.php", 
-						$_SWDF['paths']['root']."controller/models/images.php"
+						$_SWDF['paths']['root']."controller/models/images.php",
+						$_SWDF['paths']['root']."settings/images.php"
 		),
 		"body_includes"=>Array($_SWDF['paths']['root']."controller/views/_img.php"),
 	);

@@ -3,11 +3,12 @@
 		global $_SWDF;
 		if ($data['path']!=""){
 			//Normalize path
-			$data['path']==str_replace(Array("\\","//"),"/",$data['path']."/");
+			$data['path'].="/";
+			$data['path']=str_replace(Array("\\","//"),"/",$data['path']);
 			//check mime_type
-			if ($data['output']==""){
-				$data['output']="image/jpeg";
-			}
+			//if ($data['output']==""){
+			//	$data['output']="image/jpeg";
+			//}
 			$_SWDF['settings']['images']['paths'][$data['path']]=$data;
 		} else {
 			die("Invalid Image Path.");
@@ -20,9 +21,11 @@
 	
 	function SWDF_load_user_img_paths(){
 		global $_SWDF;
+		if (isset($_SESSION['_SWDF']['images']['paths']) && is_array($_SESSION['_SWDF']['images']['paths'])){
 		foreach ($_SESSION['_SWDF']['images']['paths'] as $path){
 			SWDF_add_img_path($path);
 		}
+	}
 	}
 	
 	
@@ -46,7 +49,7 @@
 				foreach ($image_path_parts as $part){
 					if (sizeof($image_path_parts)>0){
 						$new_image_path=implode("/",$image_path_parts)."/";
-						if (is_array($_SWDF['settings']['images']['paths'][$new_image_path])){
+						if (isset($_SWDF['settings']['images']['paths'][$new_image_path]) && is_array($_SWDF['settings']['images']['paths'][$new_image_path])){
 							$image_path_data=$_SWDF['settings']['images']['paths'][$new_image_path];
 							break;
 						} else {
@@ -89,9 +92,9 @@
 				$allowed_sizes=$path['allow_sizes'];
 			}
 			//Now remove any denied sizes
-			if ($path['deny_sizes']==="all"){
+			if (isset($path['deny_sizes']) && $path['deny_sizes']==="all"){
 				$allowed_sizes=Array();
-			} else if (is_array($path['deny_sizes'])){
+			} else if (isset($path['deny_sizes']) && is_array($path['deny_sizes'])){
 				foreach ($path['deny_sizes'] as $id ){
 					unset($allowed_sizes[$id]);
 				}
@@ -103,13 +106,17 @@
 	
 	}
 	
-	function SWDF_validate_resize_request($image,$size){
+	function SWDF_validate_resize_request($image,$size="",$authorized=false){
 		global $_SWDF;
 
 		//Check image settings are loaded
 		if ($_SWDF['settings']['images']['settings_loaded']!==true){
 			require($_SWDF['paths']['root']."settings/images.php");
 		}		
+		
+		if ($size==""){
+			$size=$_SWDF['settings']['images']['default_size'];
+		}
 		
 		$image=str_replace(Array("\\","//"),"/",$image);
 		$image=str_replace(Array("../","./"),"",$image);
@@ -125,8 +132,15 @@
 				//Check whether requested size is allowed
 				if (is_array($sizes)){
 					if (in_array($size,$sizes)===true && is_array($_SWDF['settings']['images']['sizes'][$size])){
+						//Check we are authorized to render
+						if (isset($path['require_auth']) && $path['require_auth']===true){
+							if ($authorized===true){
 						return $_SWDF['settings']['images']['sizes'][$size];
 					}
+						} else {
+							return $_SWDF['settings']['images']['sizes'][$size];
+				}
+			}
 				}
 			}
 			return false;
@@ -135,7 +149,7 @@
 		}
 	}
 	
-	function SWDF_clean_image_cache(){
+	function SWDF_clean_image_cache($delete_fname=null){
 		global $_SWDF;
 
 		//Check image settings are loaded
@@ -145,7 +159,11 @@
 		
 		$dir=scandir($_SWDF['paths']['images_cache']);
 		foreach($dir as $file){
-			if (is_file($_SWDF['paths']['images_cache'].$file) && filemtime($_SWDF['paths']['images_cache'].$file)<time()-$_SWDF['settings']['images']['cache_expiry'] && substr($file,-5,5)=="cache"){
+			//Work out file-name
+			$fname=substr($file, 0, strpos($file, "["));
+			
+			//Determine whether to delete or not
+			if (is_file($_SWDF['paths']['images_cache'].$file) && (filemtime($_SWDF['paths']['images_cache'].$file)<time()-$_SWDF['settings']['images']['cache_expiry'] || $fname===$delete_fname) && substr($file,-5,5)=="cache"){
 				unlink($_SWDF['paths']['images_cache'].$file);
 			}
 		}
@@ -302,7 +320,10 @@
 					return true;
 				}
 			} else if ($method==="scale"){
-				$this->img['temp']['stream']=imagecreatetruecolor($this->img[$img_id]['width']*$scale, $this->img[$img_id]['height']*$scale);
+				$n_width  = $this->img[$img_id]['width']*$scale;
+				$n_height = $this->img[$img_id]['height']*$scale;
+				
+				$this->img['temp']['stream']=imagecreatetruecolor($n_width, $n_height);
 				imagealphablending($this->img['temp']['stream'], false);
 				imagesavealpha($this->img['temp']['stream'], true);
 				
@@ -316,7 +337,7 @@
 			return false;
 		}
 		
-		public function add_watermark($path,$v="center",$h="center",$opacity=85,$scale=1,$repeat=false){
+		public function add_watermark($path,$v="center",$h="center",$opacity=85,$scale=1,$repeat=false,$xpad=0,$ypad=0){
 			if ($this->load_image($path,"wm")){
 				
 				if ($scale!="" && $scale!=1){
@@ -334,7 +355,8 @@
 					if ($v=="bottom"){ $v_pos=$this->img['main']['height']-$this->img['wm']['height']; }
 
 
-					if ($this->imagecopymerge_alpha(	$this->img['main']['stream'], $this->img['wm']['stream'],
+					if ($this->imagecopymerge_alpha(	
+												$this->img['main']['stream'], $this->img['wm']['stream'],
 												$h_pos,$v_pos,
 												0, 0, 
 												$this->img['wm']['width'], $this->img['wm']['height'],
@@ -343,7 +365,7 @@
 						return true;
 					}
 				} else {
-					$x=0;$y=0;
+					$x=$xpad;$i=0;$y=0;
 					while ($x<$this->img['main']['width'] || $y<$this->img['main']['height']){
 						$this->imagecopymerge_alpha(	$this->img['main']['stream'], $this->img['wm']['stream'],
 													$x,$y,
@@ -351,11 +373,15 @@
 													$this->img['wm']['width'], $this->img['wm']['height'],
 													$opacity
 						);
+						$i+=($this->img['wm']['width']/2);
+						if ($i>=($this->img['main']['width'])){
+							$i=0;
+						}
 						if ($x<$this->img['main']['width']){
-							$x=$x+$this->img['wm']['width'];
+							$x=$x+$this->img['wm']['width']+$xpad;
 						} else {
-							$y=$y+$this->img['wm']['height'];
-							$x=0;
+							$y=$y+$this->img['wm']['height']+$ypad;
+							$x=-$i;
 						}
 					}
 				}
@@ -363,35 +389,38 @@
 			return false;
 		}
 		
-		public function output_image($output_type=null,$filename=null){
+		public function output_image($output_type=null){
 			if ($output_type==""){
 				$output_type=$this->img['main']['type'];
 			}
-			if ($filename==null){
-				header("Content-type: ".$output_type);
-			}
-			$output=false;
+		
+			//Start a new buffer
+			ob_start();
+			
+			//Output the image
 			if ($output_type=="image/jpeg" || $output_type=="image/jp2"){
-				if (!$output=imagejpeg($this->img['main']['stream'], $filename, $this->quality)){
+				if (!$output=imagejpeg($this->img['main']['stream'], null, $this->quality)){
 					return false;
 				}
 			}
 			if ($output_type=="image/png"){
-				if (!$output=imagepng($this->img['main']['stream'], $filename)){
+				if (!$output=imagepng($this->img['main']['stream'])){
 					return false;
 				}
 			}
 			if ($output_type=="image/gif"){
-				if (!$output=imagegif($this->img['main']['stream'], $filename)){
+				if (!$output=imagegif($this->img['main']['stream'])){
 					return false;
 				}
 			}
-			return $output;
+			
+			//Return captured buffer
+			return ob_get_clean();
 		}
 
 		public function destory(){
 			foreach($this->img as $img){
-				if ($img->stream!=NULL){
+				if (is_object($img) && $img->stream!=NULL){
 					imagedestroy($img->stream);
 				}
 			}
@@ -400,5 +429,114 @@
 		public function __destruct(){
 			$this->destory();
 		}
+	}
+	
+	function SWDF_image_resizer_request($size,$img,$authorized=false){
+		global $_SWDF;
+		$return = array();
+
+		//Get details of requested size
+		$size=SWDF_validate_resize_request($img,$size,$authorized);
+
+		//Check whether to proceed with resize request
+		if ($size!=false && is_array($size)){
+
+			//Get absolute path to image
+			$img_path=$_SWDF['paths']['root'].$img;
+			$img_path=str_replace(Array("\\","//"),"/",$img_path);
+			$img_path=str_replace(Array("../","./"),"",$img_path);
+			$orig_img_path=$img_path;
+
+			//Create cache filename
+			$cache_file="";
+			if (isset($_SWDF['settings']['images']['cache_resized']) && $_SWDF['settings']['images']['cache_resized']===true && @$size['disable_caching']!==true){
+				$cache_file=$_SWDF['paths']['images_cache'].basename($img_path)."[".md5($img_path.$size['id'])."].cache";
+				//check if it exists
+				//print gmdate('D, d M Y H:i:s', filemtime($orig_img_path)).' GMT';exit;
+				if (is_file($cache_file) && filemtime($cache_file)>filemtime($orig_img_path) && filemtime($cache_file)>time()-$_SWDF['settings']['images']['cache_expiry']){
+					//Change method to "original" so it will just be passed straight through
+					$size=Array(
+						"method"=>"original"
+					);
+					//Change img_path to cache file path
+					$img_path=$cache_file;
+				} else if (is_file($cache_file)) {
+					//Delete the old cache file in case it's contents are out-of-date
+					unlink($cache_file);
+				}
+			}	
+
+			//get properties of actual image
+			$properties=getimagesize($img_path);
+
+			//Determine resizing method
+			if (isset($size['method']) && $size['method']==="original" && (!isset($size['output']) || $size['output']==null)){
+				//Check file is an image
+				if ($properties!=false){
+					//just pass image through script
+					$return['status']=200;
+					$return['headers'][]="Content-type: {$properties['mime']}";
+					$return['headers'][]='Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($orig_img_path)).' GMT';
+					$return['headers'][]='Expires: '.gmdate('D, d M Y H:i:s', time()+$_SWDF['settings']['images']['cache_expiry']).' GMT';
+					$return['data']=file_get_contents($img_path);
+				} else {
+					//Invalid image
+					$return['status']=404;
+				}
+
+			} else if(in_array($size['method'], Array("original","fit","fill","stretch","scale"))===true) {
+
+				//Load resizer class
+				$resizer=new SWDF_image_resizer();
+
+				//Set JPEG quality
+				$resizer->quality=$_SWDF['settings']['images']['default_jpeg_quality'];
+				if (isset($size['quality']) && $size['quality']!=null){
+					$resizer->quality=$size['quality'];
+				}
+
+				//load source
+				$resizer->load_image($img_path);
+
+				//resize image
+				$resizer->resize($size['method'],@$size['width'],@$size['height'],@$size['scale']);
+
+				//add watermark
+				if (isset($size['watermark']) && is_array($size['watermark'])){
+					if ($size['watermark']['opacity']==""){
+						$size['watermark']['opacity']=$_SWDF['settings']['images']['default_watermark_opacity'];
+					}
+					$resizer->add_watermark($size['watermark']['path'],$size['watermark']['v'],$size['watermark']['h'],$size['watermark']['opacity'],$size['watermark']['scale'],$size['watermark']['repeat'],50,50);
+				}
+				
+				//Render resized image
+				$output = $resizer->output_image(@$size['output']);
+
+				//Save image to cache
+				if (isset($_SWDF['settings']['images']['cache_resized']) && $_SWDF['settings']['images']['cache_resized']===true && @$size['disable_caching']!==true){
+						file_put_contents($cache_file,$output);
+				}
+
+				//Request that the browser cache this page
+				$properties=getimagesize($img_path);
+				$return['status']=200;
+				$return['headers'][]="Content-type: {$properties['mime']}";
+				$return['headers'][]='Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($orig_img_path)).' GMT';
+				$return['headers'][]='Expires: '.gmdate('D, d M Y H:i:s', time()+$_SWDF['settings']['images']['cache_expiry']).' GMT';
+
+				//Return the image
+				$return['data']=$output;
+
+				//Clean the cache directory
+				SWDF_clean_image_cache();
+			} else {
+				die("Invalid method specified for this size.");
+			}
+		} else {
+			//Not allowed to resize this image/image not found
+			$return['status']=404;
+		}
+		
+		return $return;
 	}
 ?>
