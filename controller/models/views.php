@@ -7,7 +7,7 @@
 		unset($_SWDF['theme'],$_SWDF['view'],$_SWDF['template'],$_SWDF['themes'],$_SWDF['templates'],$_SWDF['views']);
 		
 		// Load pre-defined views used by SWDF for handling resources (js, css etc.)
-		require($_SWDF['paths']['root']."controller/required_views.php");
+		require($_SWDF['paths']['root']."controller/predefined_views.php");
 		
 		/////////////////////////////////
 		//Load theme and associated views

@@ -1,5 +1,5 @@
 <?php
-	//Predefined views used for handling resources
+	//Predefined views used by the controller for handling resources
 	
 
 	//Images
@@ -8,30 +8,30 @@
 		"template"=>"empty",
 		"model_includes"=>Array(
 						$_SWDF['paths']['root']."settings/images.php", 
-						$_SWDF['paths']['root']."controller/required_models/image.php"
+						$_SWDF['paths']['root']."controller/models/images.php"
 		),
-		"body_includes"=>Array($_SWDF['paths']['root']."controller/required_views/_img.php"),
+		"body_includes"=>Array($_SWDF['paths']['root']."controller/views/_img.php"),
 	);
 
 	//CSS
 	$_SWDF['views']['_css']=Array(
 		"name"=>"_css",
 		"template"=>"empty",
-		"body_includes"=>Array($_SWDF['paths']['root']."controller/required_views/_css.php"),
+		"body_includes"=>Array($_SWDF['paths']['root']."controller/views/_css.php"),
 	);
 	
 	//Javascript
 	$_SWDF['views']['_js']=Array(
 		"name"=>"_js",
 		"template"=>"empty",
-		"body_includes"=>Array($_SWDF['paths']['root']."controller/required_views/_js.php"),
+		"body_includes"=>Array($_SWDF['paths']['root']."controller/views/_js.php"),
 	);	
 
 	//Process Login
 	$_SWDF['views']['_process_login']=Array(
 		"name"=>"_process_login",
 		"template"=>"empty",
-		"body_includes"=>Array($_SWDF['paths']['root']."controller/required_views/_process_login.php"),
+		"body_includes"=>Array($_SWDF['paths']['root']."controller/views/_process_login.php"),
 	    );	
 		
 	//Keep record of required views (used to avoid saving them as a login redirect)

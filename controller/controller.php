@@ -8,15 +8,15 @@
 	// Controller Init
 
 	//Include models required for controller operation (functions, classes etc.)
-	require("required_models/database.php");
-	require("required_models/security.php");	
-	require("required_models/ip.php");
-	require("required_models/log.php");	
-	require("required_models/sanitization.php");
-	require("required_models/strings.php");
-	require("required_models/users.php");
-	require("required_models/views.php");
-	require("required_models/files.php");
+	require("models/database.php");
+	require("models/security.php");	
+	require("models/ip.php");
+	require("models/log.php");	
+	require("models/sanitization.php");
+	require("models/strings.php");
+	require("models/users.php");
+	require("models/views.php");
+	require("models/files.php");
 
 	//Load applicable settings
 	require("settings/_settings.php");	
@@ -170,7 +170,7 @@
 			if ($_SWDF['settings']['cache_level']==="view"){
 				//Store the body_includes
 				$_SWDF['info']['cache_passthrough_files']=$_SWDF['template_data']['body_includes'];
-				$_SWDF['template_data']['body_includes']=Array($_SWDF['paths']['root']."controller/required_views/cache_passthrough.php");
+				$_SWDF['template_data']['body_includes']=Array($_SWDF['paths']['root']."controller/views/cache_passthrough.php");
 			}
 			
 			//If we're operating at the "template" cache level, the starting/stoping of the output buffer is handled by the main index.php file. 
