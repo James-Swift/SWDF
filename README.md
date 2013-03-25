@@ -12,6 +12,8 @@ You are free to use this code in any of your projects (although I don't recommen
 To use this code: 
 
 git clone git://github.com/swiftoid/swdf.git
+git submodule init
+git submodule update
 
 Then import default_database.sql into MySQL.
 
