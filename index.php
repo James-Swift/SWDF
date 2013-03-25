@@ -4,6 +4,8 @@
 	//                                                                             //
 	//                      Swift Web Development Framework                        //
 	//                       Copyright 2013 - James Swift                          //
+	//																			   //
+	//									v0.0.1									   //
 	//                                                                             //
 	//						See LICENSE for copyright terms						   //
 	//                                                                             //

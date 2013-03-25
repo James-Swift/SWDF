@@ -1,13 +1,11 @@
-SWDF
+Swift Web Development Framework - v0.0.1
 ====
-
-Swift Web Development Framework
 
 This is a formerly private project that I have made public with the hope that it will be of use to others. PLEASE NOTE: The SWDF is NOT ready for production! It is still in a very early stage of development.
 
 The SWDF is a primarily procedural style MVC PHP framework which allows you to quickly and simply create websites. While much of the code is in the procedural style, it is not afraid to use OOP when the situation warrants it. Unlike many other PHP frameworks the SWDF tries to take a balanced approach to OOP, recognizing that sometimes it can be more of a hinderance than a help, while at other times, it can be incredibly useful (such as the SWDF_image_resizer class).
 
-You are free to use this code in any of your projects (although I don't recommend it at present, as it is still unfinished even to a state where it would be usable in production). Patches/Bug Reports are more than welcome.
+You are free to use this code in any of your projects (although I strongly urge you not to attempt to use it in live production). Patches/Bug Reports are more than welcome.
 
 To use this code: 
 
@@ -19,18 +17,28 @@ To use this code:
 
 Then import default_database.sql into MySQL.
 
+`mysql -u root < default_database.sql`
+
+<small>(The SWDF assumes the default state of mysql where the root user has no password. Hopefully your setup is different though. If so you will need to specify the DB details in `settings/_settings.php` before the SWDF will work.)</small>
+
 PLEASE NOTE: Config files are included in the repo as examples. To avoid a `git pull` overwriting your settings files, I recommend you copy the repo to a separate directory from the cloned repo to use as a testing environment.
 
+## Branching Model
 
-Licence (Simplified BSD License)
--------
+The SWDF uses the branching/development model described [here](http://nvie.com/posts/a-successful-git-branching-model/).
 
-Copyright (c) 2013, James Swift  
-All rights reserved.
+If you wish to test the latest development version, checkout branch `develop`.
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+## Versioning
 
-- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Releases will be numbered with the following format:
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+`<major>.<minor>.<patch>`
+
+The current version number can be found at the top of the README.md file and the main index.php file.
+
+For more information please visit [http://semver.org/](http://semver.org/).
+
+## Licence (Simplified BSD License)
+
+For licensing details, see [LICENSE](https://github.com/swiftoid/SWDF/blob/master/LICENSE)
