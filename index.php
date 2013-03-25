@@ -3,9 +3,9 @@
 	/////////////////////////////////////////////////////////////////////////////////
 	//                                                                             //
 	//                      Swift Web Development Framework                        //
-	//                       Copyright 2012 - James Swift                          //
+	//                       Copyright 2013 - James Swift                          //
 	//                                                                             //
-	//     May only be used with written permission from the copyright holder.     //
+	//						See LICENSE for copyright terms						   //
 	//                                                                             //
 	/////////////////////////////////////////////////////////////////////////////////
 	//                                                                             //
