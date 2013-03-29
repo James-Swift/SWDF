@@ -4,10 +4,10 @@
 	//                                                                             //
 	//                      Swift Web Development Framework                        //
 	//                       Copyright 2013 - James Swift                          //
-	//																			   //
-	//									v0.0.1									   //
+	//									       //
+	//				     v0.1.0				       //
 	//                                                                             //
-	//						See LICENSE for copyright terms						   //
+	//			See LICENSE for copyright terms			       //
 	//                                                                             //
 	/////////////////////////////////////////////////////////////////////////////////
 	//                                                                             //
@@ -16,9 +16,9 @@
 	//                                                                             //
 	//           This framework has only two reserved variable names:              //
 	//                                                                             //
-	//      $_SWDF <- A non-persistent, multi-dimensional associative array		   //
+	//      $_SWDF <- A non-persistent, multi-dimensional associative array	       //
 	//                                                                             //
-	//		   You are free to read/write to it, but be careful not to		       //
+	//		   You are free to read/write to it, but be careful not to     //
 	//       overwrite the entire variable as this will break the framework.       //
 	//                                                                             //
 	//                                                                             //
