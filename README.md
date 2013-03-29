@@ -9,7 +9,7 @@ You are free to use this code in any of your projects (although I strongly urge 
 
 To use this code: 
 
-`git clone git://github.com/swiftoid/swdf.git`
+`git clone git://github.com/james-swift/swdf.git`
 
 `git submodule init`
 
@@ -41,4 +41,4 @@ For more information please visit [http://semver.org/](http://semver.org/).
 
 ## Licence (Simplified BSD License)
 
-For licensing details, see [LICENSE](https://github.com/swiftoid/SWDF/blob/master/LICENSE)
+For licensing details, see [LICENSE](https://github.com/james-swift/SWDF/blob/master/LICENSE)
