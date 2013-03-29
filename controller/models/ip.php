@@ -67,7 +67,7 @@
 
 				//Spawn a new blank session and kick the user into that
 				session_regenerate_id();
-				$_SESSION[]=Array();
+				session_unset();
 
 				//Let the user know what just happened
 				header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"wrong_browser"), true)); exit;

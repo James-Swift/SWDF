@@ -7,7 +7,7 @@
 		"name"=>"_img",
 		"template"=>"empty",
 		"model_includes"=>Array(
-						$_SWDF['paths']['root']."assets/SWDF_image_resizer/image_resizer.php",
+						$_SWDF['paths']['root']."assets/SWDF_image_resizer/SWDF_image_resizer.php",
 						$_SWDF['paths']['root']."settings/images.php"
 		),
 		"body_includes"=>Array($_SWDF['paths']['root']."controller/views/_img.php"),
