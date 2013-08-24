@@ -32,7 +32,7 @@
  * You can  restrict which sizes are allowed in which directories. To do so, use 
  * the: SWDF_add_img_path() function in this file like so:
  * 
- * SWDF_add_img_path( Array(
+ * \JamesSwift\add_img_path( Array(
  *	"path"=>"images/",
  *	"allow_sizes"=>"all",
  *	"deny_sizes"=>Array(1,2,3)
@@ -60,13 +60,13 @@
 //Image Directories Options
 
 	//TODO: Allow directory wide caching over-ride
-	
-	SWDF_add_img_path(Array(
+
+	\JamesSwift\add_img_path(Array(
 		"path"=>"images/",
 		"allow_sizes"=>"all"
 	));
 	
-	SWDF_add_img_path(Array(
+	\JamesSwift\add_img_path(Array(
 		"path"=>"images/restricted/",
 		"deny_sizes"=>Array("0")
 	));

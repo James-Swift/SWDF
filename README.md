@@ -1,15 +1,15 @@
-Swift Web Development Framework - v0.1.0
+Swift Web Development Framework - v0.2.0
 ====
 
 This is a formerly private project that I have made public with the hope that it will be of use to others. PLEASE NOTE: The SWDF is NOT ready for production! It is still in a very early stage of development.
 
-The SWDF is a primarily procedural style MVC PHP framework which allows you to quickly and simply create websites. While much of the code is in the procedural style, it is not afraid to use OOP when the situation warrants it. Unlike many other PHP frameworks the SWDF tries to take a balanced approach to OOP, recognizing that sometimes it can be more of a hinderance than a help, while at other times, it can be incredibly useful (such as the SWDF_image_resizer class).
+The SWDF is a primarily procedural style MVC PHP framework which allows you to quickly and simply create websites. While much of the code is in the procedural style, it is not afraid to use OOP when the situation warrants it. Unlike many other PHP frameworks the SWDF tries to take a balanced approach to OOP, recognising that sometimes it can be more of a hindrance than a help, while at other times, it can be incredibly useful (such as the ImageManager class).
 
 You are free to use this code in any of your projects (although I strongly urge you not to attempt to use it in live production). Patches/Bug Reports are more than welcome.
 
 To use this code: 
 
-`git clone git://github.com/james-swift/swdf.git`
+`git clone git://github.com/James-Swift/swdf.git`
 
 `git submodule init`
 
@@ -41,4 +41,4 @@ For more information please visit [http://semver.org/](http://semver.org/).
 
 ## License: Creative Commons Attribution - Share Alike 3.0
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SWDF</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/james-swift/SWDF" property="cc:attributionName" rel="cc:attributionURL">James Swift</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SWDF</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/James-Swift/SWDF" property="cc:attributionName" rel="cc:attributionURL">James Swift</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
