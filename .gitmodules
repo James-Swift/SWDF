@@ -7,3 +7,6 @@
 [submodule "assets/crypto-js3"]
 	path = assets/crypto-js3
 	url = git@github.com:James-Swift/crypto-js3.git
+[submodule "assets/ImageManager"]
+	path = assets/ImageManager
+	url = git@github.com:James-Swift/ImageManager.git
