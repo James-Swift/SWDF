@@ -4,3 +4,6 @@
 [submodule "assets/SWDF_image_resizer"]
 	path = assets/SWDF_image_resizer
 	url = git://github.com/swiftoid/SWDF_image_resizer.git
+[submodule "assets/crypto-js3"]
+	path = assets/crypto-js3
+	url = git@github.com:James-Swift/crypto-js3.git
