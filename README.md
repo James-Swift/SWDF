@@ -1,4 +1,4 @@
-Swift Web Development Framework - v0.1.0
+Swift Web Development Framework - v0.2.0
 ====
 
 This is a formerly private project that I have made public with the hope that it will be of use to others. PLEASE NOTE: The SWDF is NOT ready for production! It is still in a very early stage of development.
