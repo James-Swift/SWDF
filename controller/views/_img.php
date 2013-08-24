@@ -8,7 +8,7 @@
 	$img=@$_GET['img'];
 
 	//Load paths specific to this user
-	SWDF_load_user_img_paths();
+	\JamesSwift\load_user_img_paths();
 	
 	//We don't actually want to write to the session file so close it straight away to speed up concurrent requests
 	session_write_close();
@@ -17,7 +17,7 @@
 	//Resize the Image
 
 	//Make resize request
-	$result=SWDF_image_resizer_request($size,$img,false);
+	$result=\JamesSwift\image_resizer_request($img,$size,false);
 	
 
 	///////////////////////////////////////////////////////////////////////
