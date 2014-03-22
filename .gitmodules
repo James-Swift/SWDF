@@ -3,4 +3,4 @@
 	url = git://github.com/douglascrockford/JSON-js.git
 [submodule "assets/SWDF_image_resizer"]
 	path = assets/SWDF_image_resizer
-	url = git://github.com/swiftoid/SWDF_image_resizer.git
+	url = git://github.com/JamesSwift/ImageManager.git
