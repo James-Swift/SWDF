@@ -3,10 +3,10 @@
 	url = git://github.com/douglascrockford/JSON-js.git
 [submodule "assets/SWDF_image_resizer"]
 	path = assets/SWDF_image_resizer
-	url = git://github.com/swiftoid/SWDF_image_resizer.git
+	url = git://github.com/JamesSwift/ImageManager.git
 [submodule "assets/crypto-js3"]
 	path = assets/crypto-js3
-	url = git@github.com:James-Swift/crypto-js3.git
+	url = git@github.com:JamesSwift/crypto-js3.git
 [submodule "assets/ImageManager"]
 	path = assets/ImageManager
-	url = git@github.com:James-Swift/ImageManager.git
+	url = git@github.com:JamesSwift/ImageManager.git

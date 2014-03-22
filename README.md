@@ -9,7 +9,7 @@ You are free to use this code in any of your projects (although I strongly urge 
 
 To use this code: 
 
-`git clone git://github.com/James-Swift/swdf.git`
+`git clone git://github.com/JamesSwift/swdf.git`
 
 `git submodule init`
 
@@ -41,4 +41,4 @@ For more information please visit [http://semver.org/](http://semver.org/).
 
 ## License: Creative Commons Attribution - Share Alike 3.0
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SWDF</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/James-Swift/SWDF" property="cc:attributionName" rel="cc:attributionURL">James Swift</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">SWDF</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/JamesSwift/SWDF" property="cc:attributionName" rel="cc:attributionURL">James Swift</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
