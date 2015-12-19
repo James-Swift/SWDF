@@ -191,5 +191,4 @@
 	unset($version,$themes_dir,$views_dir,$cache_expiry,$dir,$match,$len,$files,$file_limit,$size,$to_unlink);
 	$_SWDF['info']['controller_completed']=true;
 	
-	//Handing back to the mian index.php file.... 
-?>
+	//Handing back to the main index.php file.... 
