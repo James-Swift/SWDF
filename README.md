@@ -9,11 +9,7 @@ You are free to use this code in any of your projects (although I strongly urge 
 
 To use this code: 
 
-<<<<<<< HEAD
-`git clone git://github.com/JamesSwift/swdf.git`
-=======
 `git clone git://github.com/JamesSwift/SWDF.git`
->>>>>>> master
 
 `git submodule init`
 
