@@ -9,7 +9,11 @@ You are free to use this code in any of your projects (although I strongly urge 
 
 To use this code: 
 
+<<<<<<< HEAD
 `git clone git://github.com/JamesSwift/swdf.git`
+=======
+`git clone git://github.com/JamesSwift/SWDF.git`
+>>>>>>> master
 
 `git submodule init`
 
@@ -20,8 +24,6 @@ Then import default_database.sql into MySQL.
 `mysql -u root < default_database.sql`
 
 <small>(The SWDF assumes the default state of mysql where the root user has no password. Hopefully your setup is different though. If so you will need to specify the DB details in `settings/_settings.php` before the SWDF will work.)</small>
-
-PLEASE NOTE: Config files are included in the repo as examples. To avoid a `git pull` overwriting your settings files, I recommend you copy the repo to a separate directory from the cloned repo to use as a testing environment.
 
 ## Branching Model
 

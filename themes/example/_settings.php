@@ -1,14 +1,10 @@
 <?php
+
+
 	//Useful variables for use throughout this script. Do not alter.
 	$theme_name=basename(dirname(__FILE__)); //<- automatically taken from folder name
 	$theme_path=str_replace("\\","/",dirname(__FILE__))."/";
 	$views_path=str_replace("\\","/",dirname(__FILE__))."/views/";
-	
-	
-	
-	
-	
-	
 	
 	##################################################################################################################
 	/*
@@ -38,31 +34,31 @@
 	###### Theme Templates:
 	
 	/* Possible Theme Template Settings: ( * indicates required )
-		"name"	string	*	The name of this tempalte, Must match array key.
-		"path"	string	*	The absolute path to the template file
-		"css"	array		An array of CSS files to be referenced inside the html head section (absolute system path or url)
+		"name"		string	*	The name of this tempalte, Must match array key.
+		"path"		string	*	The absolute path to the template file
+		"css"		array		An array of CSS files to be referenced inside the html head section (absolute system path or url)
 		"js"		array		An array of JavaScript files to be referenced inside the html head section (absolute system path or url) 
 		"header"	array		An array of data to be sent in the HTTP-HEADERS (such as 'Content-Type: text/html; charset=utf-8')
 	 */
 
-	$_SWDF['templates']['main']=Array(
+	$_SWDF['templates']['main']=[
 		"name"=>"main",
 		"path"=>$theme_path."main.template.php",
 		"css"=>Array($theme_path."main.template.css"),
 		"js"=>Array($theme_path."main.template.js"),
 		"header"=>Array('Content-Type: text/html; charset=utf-8'),
-	);
+	];
 	
-	$_SWDF['templates']['empty']=Array(
+	$_SWDF['templates']['empty']=[
 		"name"=>"empty",
 		"path"=>$theme_path."empty.template.php"
-	);
+	];
 	
-	$_SWDF['templates']['blank_xhtml']=Array(
+	$_SWDF['templates']['blank_xhtml']=[
 		"name"=>"blank_xhtml",
 		"path"=>$theme_path."blank_xhtml.template.php",
 		"header"=>Array('Content-Type: text/html; charset=utf-8'),
-	);
+	];
 	
 
 	
@@ -151,4 +147,3 @@
 	/////////////////////////////////////////////////////////
 	//clean up variabels
 	unset($theme_name,$theme_path,$views_path);
-?>
