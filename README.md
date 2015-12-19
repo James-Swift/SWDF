@@ -21,8 +21,6 @@ Then import default_database.sql into MySQL.
 
 <small>(The SWDF assumes the default state of mysql where the root user has no password. Hopefully your setup is different though. If so you will need to specify the DB details in `settings/_settings.php` before the SWDF will work.)</small>
 
-PLEASE NOTE: Config files are included in the repo as examples. To avoid a `git pull` overwriting your settings files, I recommend you copy the repo to a separate directory from the cloned repo to use as a testing environment.
-
 ## Branching Model
 
 The SWDF uses the branching/development model described [here](http://nvie.com/posts/a-successful-git-branching-model/).
