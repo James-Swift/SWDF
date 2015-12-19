@@ -22,23 +22,22 @@
 
 	///////////////////////////////////////////////////////////////////////
 	//Handle returned data, mapping headers etc. and output image
-	if ($result['status']!=""){
-		//Set status Code
-		header(":",null,$result['status']);
-
+	if (isset($result['status'])){
+		//Set HTTP status Code
+		http_response_code($result['status']);
+		
 		//Set headers
 		if (isset($result['headers']) && is_array($result['headers'])){
 			foreach($result['headers'] as $header){
 				header($header);
 			}
 		}
-
-		//Output image data
+	
+		//Output image
 		if (isset($result['data'])){
 			print $result['data'];
 		}
 	} else {
-		header(":",null,500);
+		//Something went wrong, trigger a 500 error
+		http_response_code(500);
 	}
-	
-?>
