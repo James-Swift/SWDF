@@ -108,7 +108,7 @@
 		}
 	}
 
-	class Session_db_handler {
+	class Session_DB_handler {
 
 		/*
 			To use the database to store session data initiate this class.
@@ -121,6 +121,7 @@
 		private $pass;
 		private $conn_string;
 		private $using;
+		private $DB_row;
 
 		public function __construct($connection,$user=NULL,$pass=NULL){
 			if (is_object($connection) && ( is_subclass_of($connection, "PDO") || get_class($connection)=="PDO" ) ){
@@ -169,11 +170,11 @@
 			global $_SWDF;
 			try {
 
-				$query=$this->conn->prepare("SELECT `data` FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `id`=?");
+				$query=$this->conn->prepare("SELECT * FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `id`=?");
 				$query->execute([$id]);
-				$data=$query->fetchAll();
-				if (isset($data[0]['data'])) {
-					return $data[0]['data'];
+				$this->DB_row=$query->fetchAll()[0];
+				if (isset($this->DB_row['data'])) {
+					return $this->DB_row['data'];
 				}
 
 			} catch (\PDOException $e) {
@@ -184,8 +185,8 @@
 		public function write($id,$data){
 			global $_SWDF;
 			try {
-				$query=$this->conn->prepare("REPLACE INTO `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` (`id`, `data`, `last_modified`) VALUES (?,?,?);");
-				return $query->execute([$id, $data, date("Y-m-d H:i:s")]);
+				$query=$this->conn->prepare("REPLACE INTO `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` SET `id`=?, `data`=?, `last_modified`=?,`ip`=?,`hits`=?");
+				return $query->execute([$id, $data, date("Y-m-d H:i:s"), $_SERVER['REMOTE_ADDR'], $this->DB_row["hits"]+1]);
 			} catch (\PDOException $e){
 				trigger_error("Could not write to session database.",E_USER_ERROR);
 			}
@@ -204,9 +205,16 @@
 		public function clean($max_age){
 			global $_SWDF;
 			try {
-				$max_time=time()-$max_age;
+				//Delete acording to GC rules
+				$max_time = time()-$max_age;
 				$query=$this->conn->prepare("DELETE FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `last_modified`<=?;");
 				return $query->execute([date("Y-m-d H:i:s",$max_time)]);
+				
+				//Delete any single use sessions (often created by crawlers and search bots) to free up space
+				$max_time = time() - $_SWDF['settings']['delete_single_use_sessions_after'];
+				$query=$this->conn->prepare("DELETE FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `last_modified`<=? AND hits=1;");
+				return $query->execute([date("Y-m-d H:i:s",$max_time)]);
+				
 			} catch (\PDOException $e){
 				trigger_error("Could not delete from session database.",E_USER_ERROR);
 			}

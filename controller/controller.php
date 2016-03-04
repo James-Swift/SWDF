@@ -58,7 +58,7 @@
 	
 	//Load the custom session storage handler if requested
 	if ($_SWDF['settings']['use_db_for_session']===true && $_SWDF['settings']['use_db']===true){
-		new \JamesSwift\SWDF\Session_db_handler($db);
+		new \JamesSwift\SWDF\Session_DB_handler($db);
 	}
 	
 	//Prevent PHP from forcing specific session-related cache-handling on us. We'll sort that ourselves later.

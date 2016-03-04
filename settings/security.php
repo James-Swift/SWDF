@@ -14,6 +14,9 @@
 	$_SWDF['settings']['allow_login_with_id']=true;					//Whether to allow users to log in with their user id (the number asigned tho their account when registering).
 	$_SWDF['settings']['allow_login_with_username']=true;			//Whether to allow users to log in with their username. (You might disable this for a sites where username's are not used, but real-names are)
 	$_SWDF['settings']['allow_login_with_email']=true;				//Whether to allow users to log in with their email address.
+	
+	//Sessions
+	$_SWDF['settings']['delete_single_use_sessions_after']=3600*5;	//How long to wait (in seconds) before destroying sessions that only requested a single page (Search-bots create thousands of junk sessions because they don't send cookie data)
 
 	/*
 	 * For the following, the options are:
@@ -46,4 +49,3 @@
 	$_SWDF['settings']['allow_direct_resource_linking_for'] =	//Used by SWDF_make_resource_link() to determine whether to pass through php script or link directly to file
 		Array("ico","pdf","flv","jpg","jpeg","png","gif","swf","css","js");		
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-?>

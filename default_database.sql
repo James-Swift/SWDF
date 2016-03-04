@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Dec 19, 2012 at 03:00 PM
--- Server version: 5.5.24-log
--- PHP Version: 5.3.13
+-- Host: 127.0.0.1
+-- Generation Time: Mar 04, 2016 at 11:38 AM
+-- Server version: 5.5.43-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.9
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `swdf`
 --
-CREATE DATABASE `swdf` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE DATABASE IF NOT EXISTS `swdf` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `swdf`;
 
 -- --------------------------------------------------------
@@ -50,12 +50,13 @@ CREATE TABLE IF NOT EXISTS `log` (
 --
 
 CREATE TABLE IF NOT EXISTS `sessions` (
-  `id` int(11) NOT NULL,
+  `id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `data` text COLLATE utf8_unicode_ci NOT NULL,
   `last_modified` datetime NOT NULL,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `hits` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 -- --------------------------------------------------------
 
@@ -95,4 +96,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `valid_sessions` text COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
