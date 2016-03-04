@@ -181,7 +181,7 @@
 /* Logging
  * 
  * The SWDF has an inbuilt logging system which you may find useful to use in your own code. You simply
- * call it with: log_event(TITLE, DESCRIPTION, TYPE, IMPORTANCE, [DATA1, DATA2, DATA3, DATA4, DATA5])
+ * call it with: log_event(TYPE, TITLE, DESCRIPTION, IMPORTANCE, [DATA1, DATA2, DATA3, DATA4, DATA5])
  * Type can specify what kind of event you are logging. Importance is a value between 0 and 10 (10 being
  * the most important/urgent). Tha DATA1,2,3,4,5 variables are for you to dump JSON data into for referrence
  * when reading the log back later, particularly when this is an automated proccess.

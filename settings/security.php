@@ -1,5 +1,5 @@
 <?php
-	$_SWDF['settings']['on_auth_failure']="403";					//If a visitor doesn't have authorization to view a page redirect to:
+	$_SWDF['settings']['on_auth_failure']="login";					//If a visitor doesn't have authorization to view a page redirect to:
 
 	//Uploads
 	$_SWDF['settings']['max_upload_size']=5*1024*1024;				//Max upload size in bytes
@@ -42,9 +42,9 @@
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//SWDF related Settings. You don't normally need to modify these
-	$_SWDF['settings']['required_views']=Array("404","403");	//Views that any theme must have. Theme loading will fail if they are not present.	
-	$_SWDF['settings']['dont_save_login_path_on']=				//Views which a user shouldn't be redirected to after login
-		Array("login","_process_login","logout","register","register2");
-	$_SWDF['settings']['allow_direct_resource_linking_for'] =	//Used by SWDF_make_resource_link() to determine whether to pass through php script or link directly to file
+	$_SWDF['settings']['required_views']=Array("404","403","login");	//Views that any theme must have. Theme loading will fail if they are not present.	
+	$_SWDF['settings']['dont_save_login_path_on']=						//Views which a user shouldn't be redirected to after login
+		Array("404","403","login","_process_login","logout","register");
+	$_SWDF['settings']['allow_direct_resource_linking_for'] =			//Used by SWDF_make_resource_link() to determine whether to pass through php script or link directly to file
 		Array("ico","pdf","flv","jpg","jpeg","png","gif","swf","css","js");		
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -3,13 +3,13 @@
 	namespace JamesSwift\SWDF;
 
 	//remember url to return to after login
-	function save_post_login_redirect_request($overwite=false){
+	function save_post_login_redirect_request(){
 		global $_SWDF;
 		if ( !in_array($_SWDF['info']['requested_view'],$_SWDF['settings']['dont_save_login_path_on']) && !in_array($_SWDF['info']['requested_view'],$_SWDF['info']['controller_views'])){
-			if (!isset($_SESSION['_SWDF']['settings']['after_login_redirect_to']) || $_SESSION['_SWDF']['settings']['after_login_redirect_to']=="" || $overwite==true){
-				$_SESSION['_SWDF']['settings']['after_login_redirect_to']=$_SERVER['REQUEST_URI'];
-				return true;
-			}
+			
+			$_SESSION['_SWDF']['settings']['after_login_redirect_to']=$_SERVER['REQUEST_URI'];
+			return true;
+		
 		} 
 		return false;
 	}
@@ -32,7 +32,7 @@
 				}
 				
 				//Remove sensitive data to avoid accidental security breach
-				unset($_SWDF['info']['user']['password_id'],$_SWDF['info']['user']['password_username'],$_SWDF['info']['user']['password_email']);
+				unset($_SWDF['info']['user']['password']);
 				
 				//Convert JSON data into php associative array
 				$_SWDF['info']['user']['valid_sessions']=json_decode($_SWDF['info']['user']['valid_sessions'], true);
@@ -94,5 +94,46 @@
 		$_SWDF['info']['user_logged_in']=false;
 		
 		//TODO: make logout function
+		
+	}
+	
+	function log_failed_login_and_die($username=null, $message=null){
+
+	    global $_SWDF;
+	
+	    //Log attempt
+		log_event("failed-login","Failed login attempt",null,7,$message,$username);
+	
+		//Redirect to login page
+		header('Location: '.make_link($_SWDF['settings']['on_auth_failure'], ["error"=>"bad_login"], true));
+		
+		//Die
+		die();
+	}
+	
+	function lookup_auth_error_message($id,$type="user"){
+		$errors=[
+			"login_disabled"=>[
+				"Sorry, we couldn't attempt to log you in as the website login system has been disabled by the administrator.",
+				"User log-in failed because the login system has been dsiabled in the SWDF settings."
+			],
+			"insufficient_session_requests_before_login"=>[
+				"Sorry, your login attempt failed cookies are required to log in. Please ensure your browser is set to allow cookies, then try again.",
+				"User log-in failed because they hadn't visited a log-in page first. Either their browser has disabled cookies or someone is trying to brute force the login system."
+			],
+			"remote_logout"=>[
+				"Sorry, this user session has been logged out remotely. This could be because this account has been logged in somwhere else recently and the system only allows one active log in at a time, or because you chose to log out of this session.",
+				"The user's session has been logged out remotely. This could be because the account has been logged in somwhere else recently and the system only allows one active log in at a time, or because they chose to log out of this session."
+			],
+			"wrong_browser"=>[
+				"Sorry, your user session has been cleared because your browser version suddenly changed. This occasionally happens due to flash or proxy settings, but it can be a sign that someone is trying to remotely take over this session. As a precaution, your session has been closed. This means that any temporary data you have entered may have been lost (such as items in a shopping cart, or cookie preferences). Data associated with a user account however will not have been removed.",
+				"The user's session has been cleared because their browser version suddenly changed. This occasionally happens due to flash or proxy settings, but it can be a sign that someone is trying to remotely take over their session. As a precaution, their session data has been deleted. This means that any temporary data they entered may have been lost (such as items in a shopping cart, or cookie preferences). Data associated with their user account however will not have been removed."
+			]
+		];
+		if ($type==="user"){
+			return $errors[$id][0];
+		} else {
+			return $errors[$id][1];
+		}
 		
 	}

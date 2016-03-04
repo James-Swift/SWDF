@@ -72,5 +72,3 @@ function SWDF_validate_token($id, $token, $auto_delete=true){
 		return false;
 	}
 }
-
-?>

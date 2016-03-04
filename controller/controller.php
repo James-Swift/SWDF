@@ -70,7 +70,7 @@
 	//Try to determine if user is able to send/receive cookies and therefore use the session mechanism (result is: boolean $_SWDF['info']['cookies_enabled'] )
 	\JamesSwift\SWDF\check_cookies();
 	
-	//Check the security of $_SESSION for both registered and anonymous users. Note: This may regenerate/kick/wipe the current session if it thinks a hijacking attempt is being attempted.
+	//Check the security of $_SESSION for both registered and anonymous users. Note: This may regenerate/kick/wipe the current session if it thinks a hijacking attempt is being made.
 	\JamesSwift\SWDF\check_session_security();
 	
 	//Check to see if a user is logged in (sets $_SWDF['info']['user_logged_in']) and validate thier user session. Also loads user data to $_SWDF['info']['user'].
@@ -92,7 +92,7 @@
 		
 		//If the user hasn't logged in yet, save the current request (except in a few circumstances) so they can be redirect to it after login.
 		if ($_SWDF['info']['user_logged_in']===false){
-			\JamesSwift\SWDF\save_post_login_redirect_request(true);
+			\JamesSwift\SWDF\save_post_login_redirect_request();
 		}
 
 		//Select the view to be used and update $_SWDF

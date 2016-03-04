@@ -60,19 +60,30 @@
 
 		//////////////////////////////////////
 		//Check to see if the HTTP_USER_AGENT string for this request is the same as the first request this user made
-		if (!isset($_SESSION['_SWDF']['info']['limit_to_browser'])){
+		if (!isset($_SESSION['_SWDF']['info']['limit_to_browser']) && $_SWDF['settings']['multiple_browser_login_sessions']['state']==="force"){
 			$_SESSION['_SWDF']['info']['limit_to_browser']=true;
+		} else if (!isset($_SESSION['_SWDF']['info']['limit_to_browser'])){
+			$_SESSION['_SWDF']['info']['limit_to_browser']=false;
 		}
 		if (isset($_SESSION['_SWDF']['info']['browser']) && $_SESSION['_SWDF']['info']['browser']!="" && $_SESSION['_SWDF']['info']['limit_to_browser']!==false){
 			if ($_SESSION['_SWDF']['info']['browser'] != \JamesSwift\SWDF\get_browser()){
 				//We seem to be using a differnt browser all of a sudden - someone might be trying to hijack the session.
 
-				//Spawn a new blank session and kick the user into that
+				//Spawn a new session id, kick the user into that, then wipe all session variables (leaving the old session intact)
 				session_regenerate_id();
-				session_unset();
+				session_destroy();
+				$_SESSION=[];
 
+				//Log this
+				log_event(	"session-browser-mismatch",
+							"A user attempted to access a session with the wrong browser information",
+							lookup_auth_error_message("wrong_browser","info"),
+							6,
+							"wrong_browser"
+				);
+				
 				//Let the user know what just happened
-				header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"wrong_browser"), true)); exit;
+				header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"wrong_browser"), true)); die(" ");
 			}
 		} else {
 			//This is probably the user's first request. Store the current HTTP_USER_AGENT in the $_SESSION variable.
@@ -81,16 +92,28 @@
 
 		//////////////////////////////////////
 		//Check to see if the IP address for this request is the same as the first request this user made after logging in
+		if (!isset($_SESSION['_SWDF']['info']['limit_to_ip']) && $_SWDF['settings']['multiple_ip_login_sessions']['state']==="force"){
+			$_SESSION['_SWDF']['info']['limit_to_ip']=\JamesSwift\SWDF\get_ip();
+		}
 		if (isset($_SESSION['_SWDF']['info']['limit_to_ip']) && $_SESSION['_SWDF']['info']['limit_to_ip']!=false){
 			if ($_SESSION['_SWDF']['info']['limit_to_ip']!=\JamesSwift\SWDF\get_ip()){
 				//We seem to be using a from a different IP address all of a sudden - someone might be trying to hijack the session.
 
-				//Spawn a new blank session and kick the user into that
+				//Spawn a new session id, kick the user into that, then wipe all session variables (leaving the old session intact)
 				session_regenerate_id();
-				$_SESSION[]=Array();
-
+				session_destroy();
+				$_SESSION=[];
+				
+				//Log this
+				log_event(	"session-ip-mismatch",
+							"A user attempted to access a session from the wrong IP address",
+							lookup_auth_error_message("wrong_ip","info"),
+							6,
+							"wrong_ip"
+				);
+				
 				//Let the user know what just happened
-				header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"wrong_ip"), true)); exit;
+				header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"wrong_ip"), true)); die(" ");
 			}
 		}
 
@@ -186,7 +209,7 @@
 			global $_SWDF;
 			try {
 				$query=$this->conn->prepare("REPLACE INTO `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` SET `id`=?, `data`=?, `last_modified`=?,`ip`=?,`hits`=?");
-				return $query->execute([$id, $data, date("Y-m-d H:i:s"), $_SERVER['REMOTE_ADDR'], $this->DB_row["hits"]+1]);
+				return $query->execute([$id, $data, date("Y-m-d H:i:s"), get_ip(), $this->DB_row["hits"]+1]);
 			} catch (\PDOException $e){
 				trigger_error("Could not write to session database.",E_USER_ERROR);
 			}

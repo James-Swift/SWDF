@@ -41,7 +41,7 @@
 	$_SWDF['paths']['root']=str_replace(Array('\\',"\\","//"),"/",dirname(__FILE__)."/");
 	
 	//Define path to SWDF folder as the web-browser sees it
-	$_SWDF['paths']['web_root']=dirname($_SERVER['PHP_SELF'])."/";
+	$_SWDF['paths']['web_root']=str_replace(Array('\\',"\\","//"),"/",dirname($_SERVER['PHP_SELF'])."/");
 	
 	//Run controller which selects the appropriate view
 	require("controller/controller.php");

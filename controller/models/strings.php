@@ -109,7 +109,7 @@
 	}
 
 
-	function make_link($view, $variables="",$full_url=false,$html_output=false){
+	function make_link($view, $variables="",$full_url=false, $html_output=false){
 		global $_SWDF;
 		$link="";
 		if ($full_url==true){
@@ -118,11 +118,17 @@
 		$link.="?".$_SWDF['settings']['vvn']."=".urlencode($view);
 		if ($variables!=""){
 			if (is_array($variables)){
+				$append="";
 				foreach($variables as $key=>$val){
-					$link.="&$key=".urlencode($val);
+					if ($key==="#"){
+							$append="#".$val;
+					} else {
+						$link.="&".$key."=".urlencode($val);
+					}
 				}
+				$link.=$append;
 			} else {
-				$link.="&$variables";
+				$link.="&".$variables;
 			}
 		}
 		if ($html_output==false){
@@ -162,4 +168,3 @@
 	function ends_withi($needle, $haystack){
 		return (strtolower(substr($haystack,strlen($needle)*-1))===strtolower($needle));
 	}	
-?>

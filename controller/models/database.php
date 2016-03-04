@@ -126,7 +126,7 @@
 				$stat=$this->prepare($sql);
 				$stat->execute($vals);
 				return true;
-			} catch (PDOException $e){
+			} catch (\PDOException $e){
 				throw $e;
 			}
 			return false;

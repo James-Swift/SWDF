@@ -122,8 +122,7 @@
 		"head_title"=>get_text('login','gui_name')." | ".get_text('_none','website_title'),
 		"menu_item"=>true,
 		"body_includes"=>Array($views_path."login/login.php"),	
-		"css"=>Array($views_path."login/login.css"),
-		"js"=>Array($_SWDF['paths']['root']."assets/crypto-js3/src/sha256.js",$_SWDF['paths']['root']."assets/SWDF/login.js",$views_path."login/login.js"),
+		"css"=>Array($views_path."login/login.css")
 	    );	
 	
 	//403 - Access Denied
