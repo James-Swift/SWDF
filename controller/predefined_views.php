@@ -39,4 +39,3 @@
 		$_SWDF['info']['controller_views'][]=$rv['name'];
 	}
 	unset($rv);
-?>

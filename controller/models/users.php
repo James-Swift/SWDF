@@ -1,7 +1,9 @@
 <?php
 
+	namespace JamesSwift\SWDF;
+
 	//remember url to return to after login
-	function SWDF_save_post_login_redirect_request($overwite=false){
+	function save_post_login_redirect_request($overwite=false){
 		global $_SWDF;
 		if ( !in_array($_SWDF['info']['requested_view'],$_SWDF['settings']['dont_save_login_path_on']) && !in_array($_SWDF['info']['requested_view'],$_SWDF['info']['controller_views'])){
 			if (!isset($_SESSION['_SWDF']['settings']['after_login_redirect_to']) || $_SESSION['_SWDF']['settings']['after_login_redirect_to']=="" || $overwite==true){
@@ -13,7 +15,7 @@
 	}
 
 	
-	function SWDF_validate_user_session(){
+	function validate_user_session(){
 		global $_SWDF;
 		//Assume the user isn't logged in
 		$_SWDF['info']['user_logged_in']=false;
@@ -24,7 +26,7 @@
 				//For now, assume user is logged in while we load and validate their session
 				
 				//Load user data into info array for handy reference
-				$_SWDF['info']['user']=SWDF_user_info($_SESSION['_SWDF']['info']['user_id']);
+				$_SWDF['info']['user']=\JamesSwift\SWDF\user_info($_SESSION['_SWDF']['info']['user_id']);
 				if ($_SWDF['info']['user']==false){
 					trigger_error("Unable to load user settings from Database.",E_USER_ERROR);
 				}
@@ -38,13 +40,13 @@
 				//Check this session hasn't been logged out
 				if (in_array($_SESSION['_SWDF']['info']['persistant_session_id'], $_SWDF['info']['user']['valid_sessions'])!==true){
 					//This session has been logged out. Tell the user.
-					SWDF_logout();
+					\JamesSwift\SWDF\logout();
 					header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"remote_logout"), true)); exit;
 				} else {
 					//Check this user hasn't been banned
 					if ($_SWDF['info']['user']['banned_until']>date("Y-m-d H:i:s")){
 						//This session has been logged out. Tell the user.
-						SWDF_logout();
+						\JamesSwift\SWDF\logout();
 						header( "Location: " . make_link($_SWDF['settings']['on_auth_failure'], array("reason"=>"banned"), true)); exit;
 					} else {
 						//Everything checks out. They are logged in.
@@ -62,7 +64,7 @@
 
 
 	//return specific or all info about a particular user
-	function SWDF_user_info($id,$info="*"){
+	function user_info($id,$info="*"){
 		global $_SWDF,$db;
 		$id=strtolower($id);
 		//TODO: Make sure when registering a username can't just be a number (otherwise it could be wrongly identified below)
@@ -85,7 +87,7 @@
 		return false;
 	}
 	
-	function SWDF_logout(){
+	function logout(){
 		global $_SWDF;
 		unset($_SESSION['_SWDF']['info']['user_id']);
 		unset($_SWDF['info']['user']);
@@ -94,5 +96,3 @@
 		//TODO: make logout function
 		
 	}
-
-?>

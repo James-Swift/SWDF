@@ -74,7 +74,7 @@
 	\JamesSwift\SWDF\check_session_security();
 	
 	//Check to see if a user is logged in (sets $_SWDF['info']['user_logged_in']) and validate thier user session. Also loads user data to $_SWDF['info']['user'].
-	SWDF_validate_user_session();
+	\JamesSwift\SWDF\validate_user_session();
 
 	//Setup default $_SESSION state, if this is the user's first visit.
 	if (!isset($_SESSION['_SWDF']['language'])){
@@ -92,7 +92,7 @@
 		
 		//If the user hasn't logged in yet, save the current request (except in a few circumstances) so they can be redirect to it after login.
 		if ($_SWDF['info']['user_logged_in']===false){
-			SWDF_save_post_login_redirect_request(true);
+			\JamesSwift\SWDF\save_post_login_redirect_request(true);
 		}
 
 		//Select the view to be used and update $_SWDF

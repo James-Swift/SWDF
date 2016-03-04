@@ -1,6 +1,10 @@
 <?php
 
-	if ($_SWDF['settings']['allow_login']!==false){
+	if ($_SWDF['settings']['allow_login']===false){
+		
+		print "Sorry. The user system has been disabled.";
+		
+	} else {
 		
 		//Sanitize variables
 		$username="";
@@ -12,7 +16,6 @@
 		//TODO: parse $failure_reason and give feedback
 		?>
 		<form action="<?php print make_link("_process_login"); ?>" method="post" id="LOGIN_form">
-			<input type="hidden" name="hash" value="" id="LOGIN_hash" />
 			<input type="hidden" name="token" value="<?php print $token ?>" id="LOGIN_token" />
 			<table>
 				<tr>
@@ -21,31 +24,14 @@
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<?php if (isset($_GET['noscript']) && $_GET['noscript']==="true"){ ?> 
 					<td><input type="password" name="password" value="" id="LOGIN_password" /></td>
-					<?php } else { ?> 
-					<td><input type="password" value="" id="LOGIN_password" /></td>
-					<?php } ?> 
 				</tr>
 			</table>
 
-			<?php if (isset($_GET['noscript']) && $_GET['noscript']==="true"){ ?> 
 			<input type="hidden" name="noscript" value="true" />
 			<input type="submit" value="Log In" />
-			<br/>
-			<br/>
-			Warning, your password is being sent in insecure plain text format. Enable JavaScript then <a href="<?php print make_link("login"); ?>">click here to enable a more secure login</a>.
-			<?php } else { ?> 
-			<script type="text/javascript">
-				document.write("<input type='submit' value='Log In' />");
-				document.getElementById("LOGIN_form").onsubmit = presubmit;
-			</script>
-			<noscript>
-				For added security we require the use of JavaScript to for this log-in form. You should enable JavaScript before trying to log in.
-				<br/>
-				If you can't enable JavaScript in your browser, <a href="<?php print make_link("login",Array("noscript"=>"true")); ?>">click here to enable the less-secure log-in form.</a>
-			</noscript>
-			<?php } 
+
+			<?php
 			
 			//Check whether to bother outputting session options box at all
 			if (	$_SWDF['settings']['concurrent_login_sessions']['state']==="allow" || 
@@ -85,11 +71,7 @@
 
 				print "</p>";
 			}
-			?>
-		</form>
-
-		<?php
-	} else {
-		print "Sorry. Logging in has been disabled.";
+			
+		print "</form>";
+		
 	}
-?>

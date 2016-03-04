@@ -58,7 +58,7 @@ if ( $token_is_valid === false ) {
 	
 	
 	//Fetch user row from DB
-	$user_info = SWDF_user_info($username);
+	$user_info = \JamesSwift\SWDF\user_info($username);
 	
 	//Check user is recorgnized
 	if ($user_info==""){

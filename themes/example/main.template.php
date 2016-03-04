@@ -51,7 +51,7 @@
 		<hr/>
 		<div id="footer">
 			<ul>
-				<li>Copyright James Swift - 2015</li>
+				<li>Copyright James Swift - 2016</li>
 				<li><a target="_new" href="http://validator.w3.org/check?uri=referer">Valid xHTML</a></li>
 				<li><?php print "This page took ".round((microtime(true)-$_SWDF['info']['execution_start'])*1000)." milliseconds to generate."; ?></li>
 			</ul>

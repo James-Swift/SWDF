@@ -111,7 +111,7 @@
  * Following are the i18n settings:
  */
 	$_SWDF['settings']['default_language']="en";									//The default language for the users visiting the site. Normally "en".
-	$_SWDF['info']['available_languages']=array("en");								//An array of the languages supported by the website
+	$_SWDF['info']['available_languages']=["en"];								//An array of the languages supported by the website
 	$_SWDF['paths']['text']=$_SWDF['paths']['root']."data/text/";					//Where to store i18n text data (if using file-system storage method).
 
 	
@@ -218,5 +218,3 @@
  */
 	require("security.php");							//Settings related to website security
 	require("sanitization.php");						//Settings related to data Sanitization
-
-?>
