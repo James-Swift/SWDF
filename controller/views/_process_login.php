@@ -117,7 +117,7 @@ if ( $token_is_valid === false ) {
 				//Store session security setings
 				$_SESSION['_SWDF']['info']['limit_to_ip']=false;
 				if ($limit_to_ip==="true"){
-					$_SESSION['_SWDF']['info']['limit_to_ip']=SWDF_get_ip();
+					$_SESSION['_SWDF']['info']['limit_to_ip']=\JamesSwift\SWDF\get_ip();
 				}
 				
 				$_SESSION['_SWDF']['info']['limit_to_browser']=$limit_to_ip;

@@ -58,7 +58,7 @@
 	
 	//Load the custom session storage handler if requested
 	if ($_SWDF['settings']['use_db_for_session']===true && $_SWDF['settings']['use_db']===true){
-		new SWDF_session_db_handler($db);
+		new \JamesSwift\SWDF\Session_db_handler($db);
 	}
 	
 	//Prevent PHP from forcing specific session-related cache-handling on us. We'll sort that ourselves later.
@@ -68,10 +68,10 @@
 	session_start();
 	
 	//Try to determine if user is able to send/receive cookies and therefore use the session mechanism (result is: boolean $_SWDF['info']['cookies_enabled'] )
-	SWDF_check_cookies();
+	\JamesSwift\SWDF\check_cookies();
 	
 	//Check the security of $_SESSION for both registered and anonymous users. Note: This may regenerate/kick/wipe the current session if it thinks a hijacking attempt is being attempted.
-	SWDF_check_session_security();
+	\JamesSwift\SWDF\check_session_security();
 	
 	//Check to see if a user is logged in (sets $_SWDF['info']['user_logged_in']) and validate thier user session. Also loads user data to $_SWDF['info']['user'].
 	SWDF_validate_user_session();
