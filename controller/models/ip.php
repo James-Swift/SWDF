@@ -169,23 +169,23 @@
 			global $_SWDF;
 			try {
 
-				$query=$this->conn->prepare("SELECT data FROM ? WHERE id=?");
-				$query->execute([$_SWDF['settings']['db']['tables']['sessions'], $id]);
+				$query=$this->conn->prepare("SELECT `data` FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `id`=?");
+				$query->execute([$id]);
 				$data=$query->fetchAll();
 				if (isset($data[0]['data'])) {
 					return $data[0]['data'];
 				}
 
 			} catch (\PDOException $e) {
-				trigger_error("Could not read from session database.",E_USER_ERROR);
+				trigger_error("Could not read from session database.", E_USER_ERROR);
 			}
 		}
 
 		public function write($id,$data){
 			global $_SWDF;
 			try {
-				$query=$this->conn->prepare("REPLACE INTO ? (id, data, last_modified) VALUES (?,?,?);");
-				return $query->execute([$_SWDF['settings']['db']['tables']['sessions'], $id, $data, date("Y-m-d H:i:s")]);
+				$query=$this->conn->prepare("REPLACE INTO `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` (`id`, `data`, `last_modified`) VALUES (?,?,?);");
+				return $query->execute([$id, $data, date("Y-m-d H:i:s")]);
 			} catch (\PDOException $e){
 				trigger_error("Could not write to session database.",E_USER_ERROR);
 			}
@@ -194,8 +194,8 @@
 		public function destroy($id){
 			global $_SWDF;
 			try {
-				$query=$this->conn->prepare("DELETE FROM ".$_SWDF['settings']['db']['tables']['sessions']." WHERE id=?;");
-				$query->execute(array($id));
+				$query=$this->conn->prepare("DELETE FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `id`=?");
+				$query->execute([$id]);
 			} catch (\PDOException $e){
 				trigger_error("Could not delete from session database.",E_USER_ERROR);
 			}
@@ -205,8 +205,8 @@
 			global $_SWDF;
 			try {
 				$max_time=time()-$max_age;
-				$query=$this->conn->prepare("DELETE FROM ".$_SWDF['settings']['db']['tables']['sessions']." WHERE last_modified<=?;");
-				return $query->execute(array(date("Y-m-d H:i:s",$max_time)));
+				$query=$this->conn->prepare("DELETE FROM `".whitelist($_SWDF['settings']['db']['tables']['sessions'],"id")."` WHERE `last_modified`<=?;");
+				return $query->execute([date("Y-m-d H:i:s",$max_time)]);
 			} catch (\PDOException $e){
 				trigger_error("Could not delete from session database.",E_USER_ERROR);
 			}
